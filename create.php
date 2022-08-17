@@ -38,9 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $imagePath =
         "assets/images/" . randomString(8) . '/' . $image['name'];
       mkdir(dirname($imagePath));
-      echo '<pre>';
-      var_dump($imagePath);
-      echo '</pre>';
+
       move_uploaded_file($image['tmp_name'], $imagePath);
     }
     $stmt = $pdo->prepare("INSERT INTO products 

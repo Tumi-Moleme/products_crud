@@ -18,6 +18,8 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <title>CRUD Application v1</title>
   <!-- ---------- Bootstrap CSS ---------- -->
   <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+  <!-- ---------- Custom CSS ----------- -->
+  <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 
 <body>
@@ -45,13 +47,18 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <?php foreach ($products as $product) : ?>
             <tr>
               <td><?php echo $product['id']; ?></td>
-              <td><?php   ?></td>
+              <td>
+                <img src="<?php echo $product['image'] ?>" class="thumb-image">
+              </td>
               <td><?php echo $product['title']; ?></td>
               <td><?php echo "R " . $product['price']; ?></td>
               <td><?php echo $product['create_date']; ?></td>
               <td>
                 <button type="button" class="btn btn-outline-primary">Edit</button>
-                <button type="button" class="btn btn-outline-danger">Delete</button>
+                <form style="display: inline-block" action="delete.php" method="POST">
+                  <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
+                  <button type="button" class="btn btn-outline-danger">Delete</button>
+                </form>
               </td>
             </tr>
           <?php endforeach ?>
