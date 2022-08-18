@@ -1,7 +1,8 @@
 <?php
-$pdo =  new
-  PDO('mysql:host=localhost;port=3306;dbname=products_crud', 'root', '');
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+/** @var $pdo \PDO **/
+require_once 'database.php';
+
 $id = $_GET['id'] ?? null;
 
 if (!$id) {
@@ -82,72 +83,19 @@ function randomString($var)
   return $str;
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Update product</title>
-  <!-- ---------- Bootstrap CSS ---------- -->
-  <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
-  <!-- ---------- Custom CSS ----------- -->
-  <link rel="stylesheet" href="./assets/css/main.css">
-</head>
+<?php include_once './views/partials/header.php'; ?>
 
-<body>
-  <div class="container py-3">
-    <p>
-      <a href="index.php" class="btn btn-secondary">&LeftArrowBar;</a>
-    </p>
-    <!-- ---------- Heading ---------- -->
-    <h1 class="py-3">Update product
-      <b><?php echo $product['title']; ?></b>
-    </h1>
-    <!-- --x------- Heading -------x-- -->
+<p>
+  <a href="index.php" class="btn btn-secondary">&LeftArrowBar;</a>
+</p>
+<!-- ---------- Heading ---------- -->
+<h1 class="py-3">Update product
+  <b><?php echo $product['title']; ?></b>
+</h1>
+<!-- --x------- Heading -------x-- -->
 
-    <?php if (!empty($errors)) : ?>
-      <div class="alert alert-danger">
-        <?php foreach ($errors as $error) : ?>
-          <div> <?php echo $error; ?> </div>
-        <?php endforeach; ?>
-      </div>
-    <?php endif; ?>
-
-    <!-- ---------- Start of form ----------- -->
-    <form action="" method="POST" enctype="multipart/form-data">
-      <!-- Display image if product has one -->
-      <?php if ($product['image']) : ?>
-        <img src="<?php echo $product['image']; ?>" width="150" alt="">
-      <?php endif; ?>
-
-      <div class="form-group">
-        <label>Product Image</label> <br>
-        <input type="file" name="image">
-      </div>
-
-      <div class="form-group">
-        <label>Product Title</label>
-        <input type="text" class="form-control" name="title" value="<?php echo $title; ?>">
-      </div>
-
-      <div class="form-group">
-        <label>Product Description</label>
-        <textarea class="form-control" name="desc">
-        <?php echo $product['description']; ?>
-        </textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Product Price</label>
-        <input type="number" step=".01" class="form-control" name="price" value="<?php echo $price; ?>">
-      </div>
-      <button type="submit" class=" btn btn-primary">Submit</button>
-
-    </form>
-    <!-- --x------- Start of form --------x-- -->
-
+<?php include_once './views/products/form.php'; ?>
 </body>
 
 </html>
