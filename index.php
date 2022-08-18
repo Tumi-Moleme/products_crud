@@ -31,7 +31,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
   <div class="container py-3">
-    <h2 class="py-3">Section title</h2>
+    <h2 class="py-3">Products CRUD</h2>
     <p> <a href="create.php" class="btn btn-success">Create Product</a></p>
 
     <!-- ---------- Search bar ---------- -->

@@ -89,7 +89,7 @@ function randomString($var)
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create product</title>
+  <title>Update product</title>
   <!-- ---------- Bootstrap CSS ---------- -->
   <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
   <!-- ---------- Custom CSS ----------- -->
@@ -101,7 +101,11 @@ function randomString($var)
     <p>
       <a href="index.php" class="btn btn-secondary">&LeftArrowBar;</a>
     </p>
-    <h1 class="py-3">Update product <b><?php echo $product['title']; ?></b></h1>
+    <!-- ---------- Heading ---------- -->
+    <h1 class="py-3">Update product
+      <b><?php echo $product['title']; ?></b>
+    </h1>
+    <!-- --x------- Heading -------x-- -->
 
     <?php if (!empty($errors)) : ?>
       <div class="alert alert-danger">
@@ -111,10 +115,13 @@ function randomString($var)
       </div>
     <?php endif; ?>
 
+    <!-- ---------- Start of form ----------- -->
     <form action="" method="POST" enctype="multipart/form-data">
+      <!-- Display image if product has one -->
       <?php if ($product['image']) : ?>
         <img src="<?php echo $product['image']; ?>" width="150" alt="">
       <?php endif; ?>
+
       <div class="form-group">
         <label>Product Image</label> <br>
         <input type="file" name="image">
@@ -139,6 +146,8 @@ function randomString($var)
       <button type="submit" class=" btn btn-primary">Submit</button>
 
     </form>
+    <!-- --x------- Start of form --------x-- -->
+
 </body>
 
 </html>

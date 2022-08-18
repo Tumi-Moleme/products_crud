@@ -85,6 +85,7 @@ function randomString($var)
   <div class="container py-3">
     <h1 class="py-3">Create new product</h1>
 
+    <!-- Display error(s) message if input are not filled -->
     <?php if (!empty($errors)) : ?>
       <div class="alert alert-danger">
         <?php foreach ($errors as $error) : ?>
