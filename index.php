@@ -2,8 +2,15 @@
 $pdo =  new
   PDO('mysql:host=localhost;port=3306;dbname=products_crud', 'root', '');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$search = $_GET['search'] ?? null;
 
-$stmt = $pdo->prepare('SELECT * FROM products ORDER BY create_date DESC');
+if ($search) {
+  $stmt = $pdo->prepare('SELECT * FROM products WHERE title LIKE :title ORDER BY create_date DESC');
+  $stmt->bindValue(":title", "%$search%");
+} else {
+  $stmt = $pdo->prepare('SELECT * FROM products ORDER BY create_date DESC');
+}
+
 $stmt->execute();
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -26,6 +33,19 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <div class="container py-3">
     <h2 class="py-3">Section title</h2>
     <p> <a href="create.php" class="btn btn-success">Create Product</a></p>
+
+    <!-- ---------- Search bar ---------- -->
+    <form action="" method="get">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search for products" name="search" value="<?php echo $search ?>">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+      </div>
+    </form>
+    <!-- --x------- End of Search bar -------x-- -->
+
+    <!-- ---------- Start Of Table ---------- -->
     <div class="table-responsive">
       <table class="table table-striped table-sm">
         <thead>
@@ -48,16 +68,16 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <tr>
               <td><?php echo $product['id']; ?></td>
               <td>
-                <img src="<?php echo $product['image'] ?>" class="thumb-image">
+                <img src="<?php echo $product['image'] ?>" class="thumb-image" alt="<?php echo $product['title'] ?>">
               </td>
               <td><?php echo $product['title']; ?></td>
               <td><?php echo "R " . $product['price']; ?></td>
               <td><?php echo $product['create_date']; ?></td>
               <td>
-                <button type="button" class="btn btn-outline-primary">Edit</button>
-                <form style="display: inline-block" action="delete.php" method="POST">
+                <a href="update.php?id=<?php echo $product['id']; ?>" class="btn btn-outline-primary">Edit</a>
+                <form style="display: inline-block" action="delete.php " method="POST">
                   <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
-                  <button type="button" class="btn btn-outline-danger">Delete</button>
+                  <button type="submit" class="btn btn-outline-danger">Delete</button>
                 </form>
               </td>
             </tr>
@@ -65,6 +85,8 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </tbody>
       </table>
     </div>
+    <!-- --x------- End Of Table -------x-- -->
+
 </body>
 
 </html>

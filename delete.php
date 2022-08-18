@@ -9,3 +9,6 @@ if (!$id) {
 }
 $stmt = $pdo->prepare('DELETE FROM products WHERE id = :id ');
 $stmt->bindValue(':id', $id);
+$stmt->execute();
+//TODO send message to user
+header("Location: index.php");
