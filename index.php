@@ -47,7 +47,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- ---------- Start Of Table ---------- -->
     <div class="table-responsive">
-      <table class="table table-striped table-sm">
+      <table class="table table-hover table-bordered">
         <thead>
 
           <tr>
