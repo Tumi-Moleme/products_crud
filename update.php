@@ -24,37 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $description = $_POST['desc'];
   $price = $_POST['price'];
 
-
-
-  if (empty($title)) {
-    $errors[] = "Product title is required";
-  }
-
-  if (empty($price)) {
-    $errors[] = "Product price is required";
-  }
-
-  // check if images folder is created
-  if (!is_dir('assets/images')) {
-    mkdir('assets/images');
-  }
-
+  require_once './validate_products.php';
 
   if (empty($errors)) {
-    $image = $_FILES['image'] ?? null;
-    $imagePath = $product['image'];
 
-
-    if ($image && $image['tmp_name']) {
-      if ($product['image']) {
-        unlink($product['image']);
-      }
-      $imagePath =
-        "assets/images/" . randomString(8) . '/' . $image['name'];
-      mkdir(dirname($imagePath));
-
-      move_uploaded_file($image['tmp_name'], $imagePath);
-    }
     $stmt = $pdo->prepare("UPDATE products SET
    title = ?, image = ?,description = ?, price = ? WHERE id = ?");
 

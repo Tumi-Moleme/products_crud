@@ -12,38 +12,9 @@ $product = [
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-  $title = $_POST['title'];
-  $description = $_POST['desc'];
-  $price = $_POST['price'];
-  $date = date('Y-m-d H:i:s');
-
-
-  if (empty($title)) {
-    $errors[] = "Product title is required";
-  }
-
-  if (empty($price)) {
-    $errors[] = "Product price is required";
-  }
-
-  // check if images folder is created
-  if (!is_dir('assets/images')) {
-    mkdir('assets/images');
-  }
-
-
+  require_once './validate_products.php';
   if (empty($errors)) {
-    $image = $_FILES['image'] ?? null;
-    $imagePath = '';
 
-    if ($image) {
-      $imagePath =
-        "assets/images/" . randomString(8) . '/' . $image['name'];
-      mkdir(dirname($imagePath));
-
-      move_uploaded_file($image['tmp_name'], $imagePath);
-    }
     $stmt = $pdo->prepare("INSERT INTO products 
   (title, image,description, price, create_date )
   VALUES (?,?,?,?,?)");
@@ -52,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindValue(2, $imagePath);
     $stmt->bindValue(3, $description);
     $stmt->bindValue(4, $price);
-    $stmt->bindValue(5, $date);
+    $stmt->bindValue(5, date('Y-m-d H:i:s'));
 
     $stmt->execute();
     // let user know if product was created
