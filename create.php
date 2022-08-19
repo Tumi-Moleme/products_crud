@@ -1,7 +1,7 @@
 <?php
 
 require_once 'database.php';
-
+require_once './functions.php';
 
 $errors = [];
 $title = '';
@@ -31,17 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
-function randomString($var)
-{
-  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  $str = '';
-  for ($i = 0; $i < $var; $i++) {
-    $index = rand(0, strlen($characters) - 1);
-    $str .= $characters[$index];
-  }
 
-  return $str;
-}
 ?>
 
 <?php include_once './views/partials/header.php'; ?>
